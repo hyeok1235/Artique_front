@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavigationButton } from "../../../style/buttom";
 
@@ -42,7 +42,7 @@ const Letter = () => {
         // 텍스트가 추가된 이미지를 데이터 URL로 변환
         const dataUrl = canvas.toDataURL();
         setCanvasUrl(dataUrl); // 이 데이터를 QR 코드 생성에 사용
-        
+
         // TODO: QR 코드 생성 로직 추가
         // dataUrl을 백엔드로 전송하여 이미지 url을 받아오기
         // 그 이미지 url을 QR 코드로 생성
