@@ -9,7 +9,7 @@ export const NavigationButton = ({ onClick, children, ...props }) => (
       onClick={onClick}
       style={{
         backgroundColor: "rgba(173, 216, 230, 0.5)",
-        color: "gray",
+        color: "white",
         borderColor: "gray",
         border: "none",
       }}
@@ -27,7 +27,7 @@ export const ContentButton = ({ onClick, children, ...props }) => (
       onClick={onClick}
       style={{
         backgroundColor: "rgba(173, 216, 230, 0.1)", // 더 투명한 하늘색
-        color: "gray", // 글자색은 회색
+        color: "white", // 글자색은 회색
         border: "1px solid white", // 테두리 제거
       }}
       {...props}

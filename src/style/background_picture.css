@@ -1,0 +1,31 @@
+/* Start.css */
+.start-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  color: white;
+  background-image: url("./Starry_night.jpg"); /* 이미지 경로 지정 */
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.start-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 50% 투명도의 검정색 */
+  z-index: 1; /* 검정 막이 배경 위에 오도록 설정 */
+}
+
+.start-page > * {
+  position: relative;
+  z-index: 2; /* 텍스트와 버튼이 검정 막 위에 표시되도록 설정 */
+}
