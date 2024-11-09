@@ -113,7 +113,7 @@ const Chat = () => {
       setMessages((prev) => [
         ...prev,
         {
-          type: "bot",
+          type: "system",
           content: result.message,
           timestamp: new Date(),
         },
@@ -158,15 +158,23 @@ const Chat = () => {
       <div className="messages-container">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
-            {message.type === 'system' ? (
-              <SpeechBubble className="message-content" direction="left" style={{ backgroundColor: 'white' }}>
+            {message.type === "system" ? (
+              <SpeechBubble
+                className="message-content"
+                direction="left"
+                style={{ backgroundColor: "white" }}
+              >
                 <p>{message.content}</p>
                 <span className="timestamp">
                   {message.timestamp.toLocaleTimeString()}
                 </span>
               </SpeechBubble>
             ) : (
-              <MySpeech className="message-content" direction="right" style={{ backgroundColor: 'blue' }}>
+              <MySpeech
+                className="message-content"
+                direction="right"
+                style={{ backgroundColor: "blue" }}
+              >
                 <p>{message.content}</p>
                 <span className="timestamp">
                   {message.timestamp.toLocaleTimeString()}
