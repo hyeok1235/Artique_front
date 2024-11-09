@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton, ContentButton } from "../../../style/button";
+import { NavigationButton, ContentButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
-import FilmWithHoles from "../../../style/film";
-import Polaroid from "../../../style/polaroid";
+import FilmWithHoles from "../../../style/jsx/film";
+import Polaroid from "../../../style/jsx/polaroid";
 
 const Letter = () => {
   const [imageSrc, setImageSrc] = useState("");
@@ -184,7 +184,7 @@ const Letter = () => {
           console.log(result);
 
           // 3. navigate로 다음 페이지로 이동
-          navigate("/userview/qr", { state: { canvasUrl: photoUrl } });
+          navigate("/userview/qr", { state: { photoUrl } });
         }, "image/png");
       };
     } catch (error) {

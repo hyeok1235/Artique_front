@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import SpeechBubble from "../../../style/speechbubble";
-import MySpeech from "../../../style/myspeech";
-import { NavigationButton } from "../../../style/button";
+import SpeechBubble from "../../../style/jsx/speechbubble";
+import MySpeech from "../../../style/jsx/myspeech";
+import { NavigationButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 import sendMessage from "../../../api/chat/SendMessage";
