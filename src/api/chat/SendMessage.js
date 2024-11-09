@@ -1,42 +1,27 @@
 import React, { useState } from "react";
 
-const SendMessage = () => {
-  const [message, setMessage] = useState("");
+const sendMessage = async (data) => {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/chat/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-  const handleSend = async () => {
-    const data = {
-      message: "이 작품의 시대적 배경에 대해 설명해줘",
-      picture_id: "1",
-      receiver: "2",
-      sender: "1",
-    };
-
-    try {
-      const response = await fetch("http://127.0.0.1:5000/chat/save", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log("서버 응답:", result);
-      } else {
-        console.error("서버 요청 실패");
-      }
-    } catch (error) {
-      console.error("API 요청 중 오류 발생:", error);
+    if (response.ok) {
+      const result = await response.json();
+      console.log("서버 응답:", result);
+      return result; // return the result to the caller
+    } else {
+      console.error("서버 요청 실패");
+      throw new Error("서버 요청 실패");
     }
-  };
-
-  return (
-    <div>
-      <h1>메시지 보내기</h1>
-      <button onClick={handleSend}>메시지 전송</button>
-    </div>
-  );
+  } catch (error) {
+    console.error("API 요청 중 오류 발생:", error);
+    throw error; // propagate the error
+  }
 };
 
-export default SendMessage;
+export default sendMessage;

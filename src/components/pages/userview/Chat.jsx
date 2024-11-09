@@ -5,8 +5,9 @@ import MySpeech from "../../../style/myspeech";
 import { NavigationButton } from "../../../style/buttom";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
+import sendMessage from "../../../api/chat/SendMessage";
 
-const VoiceChatInterface = () => {
+const Chat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
@@ -88,14 +89,32 @@ const VoiceChatInterface = () => {
         throw new Error("STT API 호출 실패");
       }
 
-      const data = await response.json();
+      const user_data = await response.json();
 
       // 음성 변환 성공 시 텍스트를 메시지로 추가
       setMessages((prev) => [
         ...prev,
         {
           type: "user",
-          content: data.text,
+          content: user_data.text,
+          timestamp: new Date(),
+        },
+      ]);
+
+      // 메시지 전송
+      const query = {
+        message: user_data.text,
+        picture_id: "1",
+        receiver: "2",
+        sender: "1",
+      };
+
+      const result = await sendMessage(query);
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "system",
+          content: result.message,
           timestamp: new Date(),
         },
       ]);
@@ -139,15 +158,23 @@ const VoiceChatInterface = () => {
       <div className="messages-container">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
-            {message.type === 'system' ? (
-              <SpeechBubble className="message-content" direction="left" style={{ backgroundColor: 'white' }}>
+            {message.type === "system" ? (
+              <SpeechBubble
+                className="message-content"
+                direction="left"
+                style={{ backgroundColor: "white" }}
+              >
                 <p>{message.content}</p>
                 <span className="timestamp">
                   {message.timestamp.toLocaleTimeString()}
                 </span>
               </SpeechBubble>
             ) : (
-              <MySpeech className="message-content" direction="right" style={{ backgroundColor: 'blue' }}>
+              <MySpeech
+                className="message-content"
+                direction="right"
+                style={{ backgroundColor: "blue" }}
+              >
                 <p>{message.content}</p>
                 <span className="timestamp">
                   {message.timestamp.toLocaleTimeString()}
@@ -192,4 +219,4 @@ const VoiceChatInterface = () => {
   );
 };
 
-export default VoiceChatInterface;
+export default Chat;
