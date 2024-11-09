@@ -11,35 +11,55 @@ const { Title } = Typography;
 function AdminRegister() {
   const navigate = useNavigate();
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
   const handleSubmit = async (values) => {
     const token = localStorage.getItem('access_token');
     const formData = new FormData();
 
     // 업로드된 파일의 originFileObj에 접근
     const picturePhoto = values.picture_photo[0].originFileObj;
+    const pictureFile = new File([picturePhoto], picturePhoto.name, { type: picturePhoto.type });
     const name = values.name;
     const artist = values.artist;
     const gallery = values.gallery;
-    const endDate = new Date(values.end_name);
+    const endDate = formatDate(values.end_date);
     const customExplanation = values.explanation;
     const customQuestion = values.question;
 
-    console.log(picturePhoto, name, artist, gallery, endDate, customExplanation, customQuestion);
+    // console.log(picturePhoto, name, artist, gallery, endDate, customExplanation, customQuestion);
 
-    if (isNaN(endDate.getTime())) {
-      alert('유효하지 않은 종료일 형식입니다. 올바른 날짜 형식(YYYY-MM-DD)을 사용하세요.');
-      return;
-    }
+    // if (isNaN(endDate.getTime())) {
+    //   alert('유효하지 않은 종료일 형식입니다. 올바른 날짜 형식(YYYY-MM-DD)을 사용하세요.');
+    //   return;
+    // }
 
-    if (picturePhoto) {
-      formData.append('picture_photo', picturePhoto);
+    console.log(name);
+
+    if (pictureFile) {
+      formData.append('picture_photo', pictureFile);
     }
     formData.append('name', name);
     formData.append('artist', artist);
     formData.append('gallery', gallery);
-    formData.append('end_date', endDate.toISOString());
-    formData.append('custom_explanation', customExplanation);
-    formData.append('custom_question', customQuestion);
+    formData.append('end_date', endDate);
+    formData.append('start_date', endDate);
+    formData.append('custom_explanation', JSON.stringify(customExplanation));
+    formData.append('custom_question', JSON.stringify(customQuestion));
+    formData.append('custom_prompt', JSON.stringify('르네상스 시대 사람처럼 말해줘'));
+    console.log(endDate)
+
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/picture/create`, {
@@ -49,7 +69,10 @@ function AdminRegister() {
         },
         body: formData
       });
-
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Failed to submit form', errorData);
+     }
       if (response.ok) {
         navigate('/adminview/list');
       } else {
@@ -83,7 +106,7 @@ function AdminRegister() {
                 <Form.Item label="갤러리" name="gallery">
                   <Input placeholder="전시 장소를 입력하세요" />
                 </Form.Item>
-                <Form.Item label="전시 기간" name="end_name">
+                <Form.Item label="전시 기간" name="end_date">
                   <Input placeholder="2023-04-05의 형태로 입력하세요" />
                 </Form.Item>
               </div>
