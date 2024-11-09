@@ -19,7 +19,7 @@ export default function Start() {
       .then((response) => response.json())
       .then((data) => {
         console.log("생성된 닉네임:", data.data); // 콘솔에 닉네임 출력
-        navigate("/userview/chat"); // 채팅 페이지로 이동
+        navigate("/userview/chat", { state: { nickname: data.data } }); // 채팅 페이지로 이동
       })
       .catch((error) => {
         console.error("네트워크 오류:", error);
