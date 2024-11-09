@@ -1,0 +1,25 @@
+/* AdminList.css */
+.layout {
+    font-family: Arial, sans-serif;
+  }
+  
+  .logo {
+    color: white;
+    font-size: 24px;
+    float: left;
+    margin-right: 20px;
+  }
+  
+  .artwork-list {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
