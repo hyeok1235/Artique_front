@@ -115,9 +115,81 @@ const Letter = () => {
     createImageWithText();
   }, [selectedText]);
 
+  // 완료 버튼 클릭 시 canvasUrl을 확인하고 전달(기기에 다운/백에 post/navigateto QR)
   // navigate 버튼 클릭 시 canvasUrl을 확인하고 전달
-  const handleNavigateToQr = () => {
-    navigate("/userview/qr", { state: { canvasUrl: polaroidImageUrl } });
+  const handleNavigateToQr = async () => {
+    if (!canvasUrl) {
+      console.error("canvasUrl이 생성되지 않았습니다.");
+      return;
+    }
+
+    try {
+      // 1. 기기에 다운로드
+      const img = new Image();
+      img.src = canvasUrl;
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const canvasWidth = img.width + 40; // 폴라로이드 프레임을 위한 여백
+        const canvasHeight = img.height + 80; // 하단 여백 포함
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        // 폴라로이드 배경 그리기
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // 그림자 효과
+        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 4;
+        ctx.shadowOffsetY = 4;
+
+        // 이미지 그리기
+        ctx.drawImage(img, 20, 20, img.width, img.height); // 상하좌우 여백 적용
+
+        // 텍스트 추가
+        ctx.shadowBlur = 0; // 텍스트에는 그림자 없음
+        ctx.fillStyle = "black";
+        ctx.font = "16px Pretendard";
+        ctx.textAlign = "center";
+        ctx.fillText("2024. 11. 10.", canvasWidth / 2, canvasHeight - 20); // 하단 중앙에 날짜 텍스트
+
+        // Blob 형태로 변환하여 다운로드
+        canvas.toBlob(async (blob) => {
+          // 다운로드
+          const downloadLink = document.createElement("a");
+          downloadLink.href = URL.createObjectURL(blob);
+          downloadLink.download = "polaroid_image.png";
+          downloadLink.click();
+
+          // 2. 백엔드에 이미지 전송
+          const formData = new FormData();
+          formData.append("combined_picture", blob, "polaroid_image.png");
+
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}/combined_picture/upload_combined_picture`,
+
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (!response.ok) throw new Error("파일 업로드 실패");
+
+          const result = await response.json();
+          const photoUrl = result.photo_url;
+          console.log(result);
+
+          // 3. navigate로 다음 페이지로 이동
+          navigate("/userview/qr", { state: { canvasUrl: photoUrl } });
+        }, "image/png");
+      };
+    } catch (error) {
+      console.error("다운로드 또는 업로드 중 오류:", error);
+    }
   };
 
   return (
