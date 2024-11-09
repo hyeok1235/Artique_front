@@ -10,13 +10,14 @@ const fetchSummaries = async () => {
     }
 
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/chat/summary`,
+      `${process.env.REACT_APP_BACKEND_URL}chat/summary`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ nickname }),
+        mode: "no-cors",
       }
     );
 
