@@ -1,0 +1,31 @@
+.credits-container {
+  overflow: hidden;
+  height: 200px; /* 보이는 영역 높이 */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0 30px; /* 양쪽 여백 추가 */
+  box-sizing: border-box; /* padding이 width에 포함되도록 설정 */
+}
+
+.credits-text {
+  display: inline-block;
+  animation: scroll-up 30s linear infinite; /* 스크롤 애니메이션 */
+  white-space: pre-wrap;
+  max-width: 800px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 중앙 정렬 */
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 1.3em;
+}
+
+@keyframes scroll-up {
+  0% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}

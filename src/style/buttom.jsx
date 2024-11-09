@@ -3,15 +3,16 @@ import { Button } from "antd";
 
 //1. 메인버튼
 export const NavigationButton = ({ onClick, children, ...props }) => (
-  <div style={{ margin: "10px 0" }}>
+  <div style={{ margin: "20px 0" }}>
     <Button
       type="primary"
       onClick={onClick}
       style={{
         backgroundColor: "rgba(173, 216, 230, 0.5)",
-        color: "gray",
+        color: "white",
         borderColor: "gray",
         border: "none",
+        borderRadius: "2cap",
       }}
       {...props}
     >
@@ -27,8 +28,8 @@ export const ContentButton = ({ onClick, children, ...props }) => (
       onClick={onClick}
       style={{
         backgroundColor: "rgba(173, 216, 230, 0.1)", // 더 투명한 하늘색
-        color: "gray", // 글자색은 회색
-        border: "1px solid white", // 테두리 제거
+        color: "white", // 글자색은 회색
+        border: "none", // 테두리 제거
       }}
       {...props}
     >

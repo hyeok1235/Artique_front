@@ -1,16 +1,15 @@
 import React from 'react';
 import { Layout, Input, Button, Form, Typography } from 'antd';
 import '../../../style/AdminLogin.css';
+import AdminHeader from './admin_section/AdminHeader';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 function AdminLogin() {
   return (
     <Layout className="layout">
-      <Header className="login-header">
-        <div className="login-logo">Artique</div>
-      </Header>
+      <AdminHeader/>
       <Content className="login-content">
         <Form className="login-form" layout="vertical">
           <Form.Item>

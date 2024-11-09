@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { NavigationButton } from "../../../style/buttom";
 
 const Letter = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");

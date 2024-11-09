@@ -4,7 +4,7 @@ import AdminLogin from "./pages/adminview/AdminLogin";
 import AdminList from "./pages/adminview/AdminList";
 import AdminRegister from "./pages/adminview/AdminRegister";
 
-export default function UserView() {
+export default function AdminView() { // 컴포넌트 이름 변경
   return (
     <div>
       <Routes>
