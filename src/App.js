@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserView from "./components/UserView"; // Import UserView component
 import AdminView from "./components/AdminView"; // Import AdminView component
 import Main from "./components/Main"; // If you want to keep Main as a default route
-import Chat from "./components/pages/userview/Chat"; // Import Chat component
 
 function App() {
   return (
