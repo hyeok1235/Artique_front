@@ -8,6 +8,24 @@ import SpeechBubble from "../../../style/speechbubble";
 export default function Start() {
   const navigate = useNavigate();
 
+  const handleLetsGoClick = () => {
+    fetch("https://www.rivestsoft.com/nickname/getRandomNickname.ajax", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ lang: "ko" }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("생성된 닉네임:", data.data); // 콘솔에 닉네임 출력
+        navigate("/userview/chat"); // 채팅 페이지로 이동
+      })
+      .catch((error) => {
+        console.error("네트워크 오류:", error);
+      });
+  };
+
   return (
     <div className="start-page">
       <div
@@ -23,7 +41,7 @@ export default function Start() {
         <h1>당신을 기다리고 있었어요.</h1>
         <WordCloudComponent />
         <SpeechBubble direction="left">Wanna experience Artique?</SpeechBubble>
-        <NavigationButton onClick={() => navigate("/userview/chat")}>
+        <NavigationButton onClick={handleLetsGoClick}>
           Let's Go
         </NavigationButton>{" "}
       </div>

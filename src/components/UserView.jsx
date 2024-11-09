@@ -5,10 +5,12 @@ import Chat from "./pages/userview/Chat";
 import Letter from "./pages/userview/Letter";
 import Qr from "./pages/userview/Qr";
 import Last from "./pages/userview/Last";
+import backgroundMusic from "../assets/Vincent__Don_Mclean.mp3";
 
 export default function UserView() {
   return (
     <div>
+      <audio src={backgroundMusic} autoPlay loop />
       <Routes>
         <Route index element={<Navigate to="start" />} />
         <Route path="start" element={<Start />} />
