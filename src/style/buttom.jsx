@@ -30,9 +30,13 @@ export const ContentButton = ({ onClick, children, ...props }) => (
     <Button
       onClick={onClick}
       style={{
-        backgroundColor: "rgba(173, 216, 230, 0.1)", // 더 투명한 하늘색
+        borderRadius: "2cap",
+        fontWeight: "bold",
+        backgroundColor: "rgba(173, 216, 230, 0.3)", // 더 투명한 하늘색
         color: "white", // 글자색은 회색
-        border: "none", // 테두리 제거
+        border: "none",
+        margin: "10px", // 추가된 margin
+        padding: "10px 10px", // 추가된 padding
       }}
       {...props}
     >
