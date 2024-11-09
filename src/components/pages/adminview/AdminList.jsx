@@ -14,17 +14,27 @@ function AdminList() {
   useEffect(() => {
     const fetchArtworks = async () => {
       const token = localStorage.getItem('access_token');
+      console.log(token);
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/all_pictures`, {
+        method: "GET",
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log(response);
+      if(!response.ok) {
+        console.log('Error');
+        return;
+      }
       const data = await response.json();
-      setArtworks(Array.isArray(data) ? data : []);
+      console.log('data: ',data);
+      setArtworks(Array.isArray(data.pictures) ? data.pictures : []);
     };
 
     fetchArtworks();
   }, []);
+
+  console.log(artworks);
 
   return (
     <Layout className="layout">
@@ -44,12 +54,12 @@ function AdminList() {
             dataSource={artworks}
             renderItem={item => (
               <List.Item
-                actions={[<Button type="link" style={{ color: '#d32f2f' }} onClick={() => navigate("/adminview/register")}>수정</Button>]}
+                actions={[<Button type="link" style={{ color: '#d32f2f' }} onClick={() => navigate("/adminview/register", { state: { item } })}>수정</Button>]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar shape="circle" size="large" style={{ backgroundColor: '#ddd' }} />}
+                  avatar={<Avatar shape="circle" size="large" src={item.picture_photo} />}
                   title={<a href="#">{item.title}</a>}
-                  description={`${item.author} | ${item.gallery} | ${item.date}`}
+                  description={`${item.artist} | ${item.gallery} | ${item.end_date}`}
                 />
               </List.Item>
             )}
