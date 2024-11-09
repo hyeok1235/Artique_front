@@ -11,6 +11,11 @@ function AdminList() {
   const navigate = useNavigate();
   const [artworks, setArtworks] = useState([]);
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token'); // 토큰 삭제
+    navigate("/adminview/login"); // 로그인 페이지로 이동
+  };
+
   useEffect(() => {
     const fetchArtworks = async () => {
       const token = localStorage.getItem('access_token');
@@ -39,7 +44,7 @@ function AdminList() {
   return (
     <Layout className="layout">
       <AdminHeader>
-        <a href="/adminview/login" className="logout-link">로그아웃</a>
+      <Button onClick={handleLogout} className="logout-link" style={{position:'relative', top: '17px' }}>로그아웃</Button>
       </AdminHeader>
       <Content style={{ padding: '0 50px', marginTop: '20px' }}>
         <div className="artwork-list">
@@ -54,11 +59,11 @@ function AdminList() {
             dataSource={artworks}
             renderItem={item => (
               <List.Item
-                actions={[<Button type="link" style={{ color: '#d32f2f' }} onClick={() => navigate("/adminview/register", { state: { item } })}>수정</Button>]}
+                actions={[<Button type="link" style={{ color: '#d32f2f' }}></Button>]}
               >
                 <List.Item.Meta
                   avatar={<Avatar shape="circle" size="large" src={item.picture_photo} />}
-                  title={<a href="#">{item.title}</a>}
+                  title={<span>{item.name}</span>}
                   description={`${item.artist} | ${item.gallery} | ${item.end_date}`}
                 />
               </List.Item>
