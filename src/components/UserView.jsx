@@ -9,7 +9,6 @@ import Last from "./pages/userview/Last";
 export default function UserView() {
   return (
     <div>
-      <h1>UserView</h1>
       <Routes>
         <Route index element={<Navigate to="start" />} />
         <Route path="start" element={<Start />} />
