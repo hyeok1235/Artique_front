@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton } from "../../../style/common_util";
+import { NavigationButton } from "../../../style/buttom";
 import "../../../style/background_picture.css";
 
 export default function Qr() {

@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton, ContentButton } from "../../../style/common_util";
+import { NavigationButton, ContentButton } from "../../../style/buttom";
 import "../../../style/background_picture.css";
 import WordCloudComponent from "../../section/wordcloud";
+import SpeechBubble from "../../../style/speechbubble";
 
 export default function Start() {
   const navigate = useNavigate();
@@ -19,9 +20,9 @@ export default function Start() {
           textAlign: "center",
         }}
       >
-        <h1>Start Page</h1>
-        <ContentButton>Wanna experience Artique?</ContentButton>
+        <h1>당신을 기다리고 있었어요.</h1>
         <WordCloudComponent />
+        <SpeechBubble direction="left">Wanna experience Artique?</SpeechBubble>
         <NavigationButton onClick={() => navigate("/userview/chat")}>
           Let's Go
         </NavigationButton>{" "}

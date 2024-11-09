@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton } from "../../../style/common_util";
+import { NavigationButton } from "../../../style/buttom";
 
 export default function Letter() {
   const navigate = useNavigate();
