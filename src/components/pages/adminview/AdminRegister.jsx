@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Input, Typography, Button, Row, Col, Form } from 'antd';
+import { useNavigate } from "react-router-dom";
 import '../../../style/AdminRegister.css';
 import AdminHeader from './admin_section/AdminHeader';
 
@@ -7,10 +8,12 @@ const { Content } = Layout;
 const { Title } = Typography;
 
 function AdminRegister() {
+  const navigate = useNavigate();
+
   return (
     <Layout className="layout">
         <AdminHeader>
-          <a href="#" className="logout-link">로그아웃</a>
+          <a href="/adminview/login" className="logout-link">로그아웃</a>
         </AdminHeader>
       {/* <Header className="app-header">
         <div className="app-logo">Artique</div>
@@ -22,7 +25,7 @@ function AdminRegister() {
         <Row gutter={32}>
           {/* 좌측 섹션 */}
           <Col span={12}>
-            <Button type="link" className="back-button">뒤로 가기</Button>
+            <Button type="link" className="back-button" onClick={() => navigate('/adminview/list')}>뒤로 가기</Button>
             <div className="art-preview"></div>
             <Form layout="vertical" className="art-form">
               <Form.Item label="작품 이름">
@@ -51,7 +54,7 @@ function AdminRegister() {
                 <Input.TextArea rows={4} placeholder="ex. 제 작품을 당신의 삶과 연결지을 수 있나요?" />
               </Form.Item>
             </Form>
-            <Button type="primary" className="submit-button">등록</Button>
+            <Button type="primary" className="submit-button" onClick={() => navigate("/adminview/list")}>등록</Button>
           </Col>
         </Row>
       </Content>

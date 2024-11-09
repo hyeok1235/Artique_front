@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import '../../../style/AdminList.css';
 import { Layout, Menu, List, Avatar, Button, Typography } from 'antd';
 import AdminHeader from './admin_section/AdminHeader';
@@ -7,6 +8,8 @@ const { Content } = Layout;
 const { Title } = Typography;
 
 function AdminList() {
+  const navigate = useNavigate();
+
   const artworks = [
     { title: '별이 빛나는 밤', author: '고흐', gallery: '00갤러리', date: '2024.11.09' },
     { title: '모나리자', author: '다빈치', gallery: 'xx갤러리', date: '2024.11.08' },
@@ -16,20 +19,14 @@ function AdminList() {
 
   return (
     <Layout className="layout">
-      <AdminHeader/>
-      {/* <Header style={{ backgroundColor: '#d32f2f' }}>
-        <div className="logo">Artique</div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} style={{ backgroundColor: '#d32f2f' }}>
-          <Menu.Item key="1">전체도서</Menu.Item>
-          <Menu.Item key="2">마이페이지</Menu.Item>
-          <Menu.Item key="3">로그아웃</Menu.Item>
-        </Menu>
-      </Header> */}
+      <AdminHeader>
+        <a href="/adminview/login" className="logout-link">로그아웃</a>
+      </AdminHeader>
       <Content style={{ padding: '0 50px', marginTop: '20px' }}>
         <div className="artwork-list">
           <div className="list-header">
             <Title level={3}>작품 목록</Title>
-            <Button type="primary" style={{ backgroundColor: '#d32f2f', borderColor: '#d32f2f' }}>
+            <Button type="primary" style={{ backgroundColor: '#d32f2f', borderColor: '#d32f2f' }} onClick={() => navigate("/adminview/register")}>
               새로 만들기
             </Button>
           </div>
@@ -38,7 +35,7 @@ function AdminList() {
             dataSource={artworks}
             renderItem={item => (
               <List.Item
-                actions={[<Button type="link" style={{ color: '#d32f2f' }}>수정</Button>]}
+                actions={[<Button type="link" style={{ color: '#d32f2f' }} onClick={() => navigate("/adminview/register")}>수정</Button>]}
               >
                 <List.Item.Meta
                   avatar={<Avatar shape="circle" size="large" style={{ backgroundColor: '#ddd' }} />}

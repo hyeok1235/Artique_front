@@ -22,8 +22,9 @@
   }
   
   .logout-link {
-    color: white;
+    color: black;
     margin-left: 10px;
+    float: right;
   }
   
   /* 콘텐츠 영역 */

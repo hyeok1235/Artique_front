@@ -19,7 +19,7 @@ function AdminHeader(props) {
 
     return (
         <Header style={headerStyle}>
-            <div className="logo" style={logoStyle}>Artique</div>
+            <a href='/'className="logo" style={logoStyle}>Artique</a>
             {props.children}
         </Header>
     );
