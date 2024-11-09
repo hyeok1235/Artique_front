@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 
-
 const VoiceChatInterface = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
@@ -29,6 +28,7 @@ const VoiceChatInterface = () => {
 
   const startRecording = async () => {
     try {
+      console.log("음성 녹음 시작은 댐!!");
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorderRef.current = new MediaRecorder(stream);
       chunksRef.current = [];
