@@ -6,12 +6,15 @@ import FilmWithHoles from "../../../style/film";
 import Polaroid from "../../../style/polaroid";
 
 const Letter = () => {
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [selectedText, setSelectedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 텍스트 인덱스
   const [canvasUrl, setCanvasUrl] = useState("");
   const navigate = useNavigate();
+
+  // 2번 URL을 임시로 설정
+  const polaroidImageUrl =
+    "https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/b34c3722b18d48bd87e66c9686caec25.png";
 
   const textOptions = [
     "밤하늘을 올려다볼 때, 별들은 고독 속에서 빛나는 희망을 속삭여준다. 내 그림 속 별들이 그랬던 것처럼.",
@@ -100,13 +103,8 @@ const Letter = () => {
 
         wrapText(ctx, selectedText, x, y, maxWidth, lineHeight);
         //줄바꿈 코드 끝!!!!!!!
-        const dataUrl = canvas.toDataURL();
-        setCanvasUrl(dataUrl);
 
-        const googleChartAPI = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-          dataUrl
-        )}&size=200x200`;
-        setQrCodeUrl(googleChartAPI);
+        setCanvasUrl(canvas.toDataURL());
       };
 
       img.onerror = () => {
@@ -116,6 +114,11 @@ const Letter = () => {
 
     createImageWithText();
   }, [selectedText]);
+
+  // navigate 버튼 클릭 시 canvasUrl을 확인하고 전달
+  const handleNavigateToQr = () => {
+    navigate("/userview/qr", { state: { canvasUrl: polaroidImageUrl } });
+  };
 
   return (
     <div className="start-page">
@@ -159,13 +162,9 @@ const Letter = () => {
           <p style={{ margin: "0 2px" }}>{selectedText}</p>
           <ContentButton onClick={handleNext}>{">"}</ContentButton>
         </div>
-        {/* QR 코드 이미지
-      {qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" />} */}
 
         {/* 완료 버튼 */}
-        <NavigationButton onClick={() => navigate("/userview/qr")}>
-          완료
-        </NavigationButton>
+        <NavigationButton onClick={handleNavigateToQr}>완료</NavigationButton>
       </div>
     </div>
   );

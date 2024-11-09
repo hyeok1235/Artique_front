@@ -13,7 +13,7 @@ export default function Footer() {
         padding: "10px 0", // 위아래 여백
       }}
     >
-      <p>Copyright &copy;inthon_team1</p>
+      <p>Copyright &copy;inthon_team5</p>
     </div>
   );
 }
