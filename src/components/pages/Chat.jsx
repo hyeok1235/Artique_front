@@ -61,38 +61,50 @@ const VoiceChatInterface = () => {
 
   const sendToNaverSTT = async (audioBlob) => {
     setIsProcessing(true);
-    addMessage("user", "음성 메시지 변환 중...");
 
     try {
       const formData = new FormData();
       formData.append("audio", audioBlob, "recording.wav");
 
-      const response = await fetch("YOUR_NAVER_STT_API_ENDPOINT", {
-        method: "POST",
-        headers: {
-          "X-NCP-APIGW-API-KEY-ID": "YOUR_API_KEY_ID",
-          "X-NCP-APIGW-API-KEY": "YOUR_API_KEY",
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        "https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor",
+        {
+          method: "POST",
+          headers: {
+            "X-NCP-APIGW-API-KEY-ID": process.env.REACT_APP_NAVER_API_KEY_ID,
+            "X-NCP-APIGW-API-KEY": process.env.REACT_APP_NAVER_API_KEY,
+            "Content-Type": "application/octet-stream",
+          },
+          body: audioBlob,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("STT API 호출 실패");
       }
 
       const data = await response.json();
-      setMessages((prev) => {
-        const newMessages = [...prev];
-        newMessages[newMessages.length - 1] = {
+
+      // 음성 변환 성공 시 텍스트를 메시지로 추가
+      setMessages((prev) => [
+        ...prev,
+        {
           type: "user",
           content: data.text,
           timestamp: new Date(),
-        };
-        return newMessages;
-      });
+        },
+      ]);
     } catch (error) {
       console.error("STT 처리 실패:", error);
-      addMessage("system", "음성 인식에 실패했습니다.");
+      // 음성 인식 실패 시 시스템 메시지 추가
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "system",
+          content: "다시 한번 말해주시겠어요?",
+          timestamp: new Date(),
+        },
+      ]);
     } finally {
       setIsProcessing(false);
     }
