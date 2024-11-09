@@ -145,7 +145,7 @@ const Chat = () => {
       }
 
       const user_data = await response.json();
-
+      console.log(user_data);
       setMessages((prev) => [
         ...prev,
         {
@@ -177,8 +177,8 @@ const Chat = () => {
 
       generateSpeech(result.message);
     } catch (error) {
-      console.error("STT 처리 실패:", error);
-      addMessage("system", "다시 한번 말해주시겠어요?");
+      // console.error("STT 처리 실패:", error);
+      // addMessage("system", "다시 한번 말해주시겠어요?");
     } finally {
       setIsProcessing(false);
     }

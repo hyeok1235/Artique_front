@@ -46,10 +46,11 @@ const imageStyle = {
 
 const captionStyle = {
   marginTop: "10px",
-  fontSize: "14px",
+  fontSize: "18px",
   color: "#333",
   textAlign: "center",
   fontFamily: "Pretendard",
+  textShadow: "none",
 };
 
 export default Polaroid;
