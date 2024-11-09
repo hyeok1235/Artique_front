@@ -7,6 +7,27 @@ import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 import sendMessage from "../../../api/chat/SendMessage";
 
+// TypeWriter 컴포넌트 추가
+const TypeWriter = ({ text, onComplete }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex(currentIndex + 1);
+      }, 100); // 타이핑 속도 조절 (50ms)
+
+      return () => clearTimeout(timer);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, onComplete]);
+
+  return <p>{displayText}</p>;
+};
+
 const Chat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
@@ -14,6 +35,7 @@ const Chat = () => {
       type: "system",
       content: "안녕하세요, 만나서 반가워요!",
       timestamp: new Date(),
+      isTyping: true,
     },
   ]);
   const [isRecording, setIsRecording] = useState(false);
@@ -21,6 +43,7 @@ const Chat = () => {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
   const messagesEndRef = useRef(null);
+  const audioRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,6 +52,36 @@ const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // OpenAI TTS API 호출 함수
+  const generateSpeech = async (text) => {
+    try {
+      const response = await fetch("https://api.openai.com/v1/audio/speech", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "tts-1",
+          input: text,
+          voice: "alloy",
+        }),
+      });
+
+      if (!response.ok) throw new Error("TTS 생성 실패");
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      // 오디오 재생
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+      audio.play();
+    } catch (error) {
+      console.error("TTS 생성 중 오류:", error);
+    }
+  };
 
   const startRecording = async () => {
     try {
@@ -91,17 +144,16 @@ const Chat = () => {
 
       const user_data = await response.json();
 
-      // 음성 변환 성공 시 텍스트를 메시지로 추가
       setMessages((prev) => [
         ...prev,
         {
           type: "user",
           content: user_data.text,
           timestamp: new Date(),
+          isTyping: false,
         },
       ]);
 
-      // 메시지 전송
       const query = {
         message: user_data.text,
         picture_id: "1",
@@ -110,39 +162,39 @@ const Chat = () => {
       };
 
       const result = await sendMessage(query);
+
       setMessages((prev) => [
         ...prev,
         {
           type: "system",
           content: result.message,
           timestamp: new Date(),
+          isTyping: true,
         },
       ]);
+
+      generateSpeech(result.message);
     } catch (error) {
       console.error("STT 처리 실패:", error);
-      // 음성 인식 실패 시 시스템 메시지 추가
-      setMessages((prev) => [
-        ...prev,
-        {
-          type: "system",
-          content: "다시 한번 말해주시겠어요?",
-          timestamp: new Date(),
-        },
-      ]);
+      addMessage("system", "다시 한번 말해주시겠어요?");
     } finally {
       setIsProcessing(false);
     }
   };
 
   const addMessage = (type, content) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        type,
-        content,
-        timestamp: new Date(),
-      },
-    ]);
+    const newMessage = {
+      type,
+      content,
+      timestamp: new Date(),
+      isTyping: type === "system",
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+
+    if (type === "system") {
+      generateSpeech(content);
+    }
   };
 
   return (
@@ -164,7 +216,18 @@ const Chat = () => {
                 direction="left"
                 style={{ backgroundColor: "white" }}
               >
-                <p>{message.content}</p>
+                {message.isTyping ? (
+                  <TypeWriter
+                    text={message.content}
+                    onComplete={() => {
+                      const updatedMessages = [...messages];
+                      updatedMessages[index].isTyping = false;
+                      setMessages(updatedMessages);
+                    }}
+                  />
+                ) : (
+                  <p>{message.content}</p>
+                )}
                 <span className="timestamp">
                   {message.timestamp.toLocaleTimeString()}
                 </span>
