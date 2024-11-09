@@ -8,7 +8,7 @@
   height: 100vh;
   text-align: center;
   color: white;
-  background-image: url("./Starry_night.jpg"); /* 이미지 경로 지정 */
+  background-image: url("../images/Starry_night.jpg"); /* 이미지 경로 지정 */
   background-size: cover;
   background-position: center;
   overflow: hidden;

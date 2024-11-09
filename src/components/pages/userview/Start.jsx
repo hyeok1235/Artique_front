@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { NavigationButton, ContentButton } from "../../../style/common_util";
 import "../../../style/background_picture.css";
+import WordCloudComponent from "../../section/wordcloud";
 
 export default function Start() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Start() {
       >
         <h1>Start Page</h1>
         <ContentButton>Wanna experience Artique?</ContentButton>
+        <WordCloudComponent />
         <NavigationButton onClick={() => navigate("/userview/chat")}>
           Let's Go
         </NavigationButton>{" "}
