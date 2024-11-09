@@ -10,8 +10,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Route for UserView */}
-        <Route path="/userview" element={<UserView />} />
-        
+        <Route path="/userview/*" element={<UserView />} />
+
         {/* Route for AdminView */}
         <Route path="/adminview" element={<AdminView />} />
         <Route path="/adminview/main" element={<AdminList />} />
