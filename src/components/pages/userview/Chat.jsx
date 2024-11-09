@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 
-
 const VoiceChatInterface = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
