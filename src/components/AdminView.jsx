@@ -1,96 +1,18 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import AdminLogin from "./pages/adminview/AdminLogin";
+import AdminList from "./pages/adminview/AdminList";
+import AdminRegister from "./pages/adminview/AdminRegister";
 
-const onFinish = async (values) => {
-  console.log('Success:', values);
-  try {
-    const response = await fetch('https://example.com/api/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    });
-    const data = await response.json();
-    console.log('Response:', data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
-
-const AdminView = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      style={{
-        maxWidth: 600,
-      }}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  </div>
-);
-
-export default AdminView;
+export default function UserView() {
+  return (
+    <div>
+      <Routes>
+        <Route index element={<Navigate to="login" />} />
+        <Route path="login" element={<AdminLogin />} />
+        <Route path="list" element={<AdminList />} />
+        <Route path="register" element={<AdminRegister />} />
+      </Routes>
+    </div>
+  );
+}
