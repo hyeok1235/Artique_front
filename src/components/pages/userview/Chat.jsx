@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
+import sendMessage from "../../../api/chat/SendMessage";
 
-const VoiceChatInterface = () => {
+const Chat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
     {
@@ -85,14 +86,32 @@ const VoiceChatInterface = () => {
         throw new Error("STT API 호출 실패");
       }
 
-      const data = await response.json();
+      const user_data = await response.json();
 
       // 음성 변환 성공 시 텍스트를 메시지로 추가
       setMessages((prev) => [
         ...prev,
         {
           type: "user",
-          content: data.text,
+          content: user_data.text,
+          timestamp: new Date(),
+        },
+      ]);
+
+      // 메시지 전송
+      const query = {
+        message: user_data.text,
+        picture_id: "1",
+        receiver: "2",
+        sender: "1",
+      };
+
+      const result = await sendMessage(query);
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "bot",
+          content: result.message,
           timestamp: new Date(),
         },
       ]);
@@ -180,4 +199,4 @@ const VoiceChatInterface = () => {
   );
 };
 
-export default VoiceChatInterface;
+export default Chat;
