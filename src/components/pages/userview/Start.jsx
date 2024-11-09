@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton, ContentButton } from "../../../style/button";
+import { NavigationButton, ContentButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
 import WordCloudComponent from "../../section/wordcloud";
-import SpeechBubble from "../../../style/speechbubble";
+import SpeechBubble from "../../../style/jsx/speechbubble";
 
 export default function Start() {
   const navigate = useNavigate();

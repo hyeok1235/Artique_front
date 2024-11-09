@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { NavigationButton } from "../../../style/button";
+import { NavigationButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
 
 const Qr = () => {
@@ -10,7 +10,7 @@ const Qr = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
 
   useEffect(() => {
-    console.log("전달된된 canvasUrl:", photoUrl);
+    console.log("전달된된 photoUrl:", photoUrl);
     if (photoUrl) {
       const googleChartAPI = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
         photoUrl
