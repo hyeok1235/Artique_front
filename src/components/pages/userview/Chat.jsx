@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SpeechBubble from "../../../style/speechbubble";
 import MySpeech from "../../../style/myspeech";
 import { NavigationButton } from "../../../style/button";
@@ -30,6 +30,8 @@ const TypeWriter = ({ text, onComplete }) => {
 
 const Chat = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const nickname = location.state?.nickname || "사용자"; // 전달된 닉네임 또는 기본값
   const [messages, setMessages] = useState([
     {
       type: "system",
@@ -199,13 +201,23 @@ const Chat = () => {
 
   return (
     <div className="chat-container start-page">
-      <div className="header">
+      <div
+        className="header"
+        style={{
+          // display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <NavigationButton
           className="exit-button"
           onClick={() => navigate("/userview/letter")}
         >
           대화 종료하기
         </NavigationButton>
+        <p className="nickname-info">
+          ({nickname}) 님이 room Artique에 입장했어요!
+        </p>
       </div>
       <div className="messages-container">
         {messages.map((message, index) => (
@@ -252,7 +264,7 @@ const Chat = () => {
         {isProcessing ? (
           <div className="loading">
             <div className="loading-spinner"></div>
-            <span>변환중...</span>
+            <p>변환중...</p>
           </div>
         ) : (
           <div className="button-container">
@@ -260,6 +272,17 @@ const Chat = () => {
               onClick={startRecording}
               disabled={isRecording}
               className={`record-button start ${isRecording ? "disabled" : ""}`}
+              style={{
+                backgroundColor: isRecording
+                  ? "rgba(0, 0, 255, 0.3)"
+                  : "rgba(0, 0, 255, 1)", // 녹음 중이면 투명도 낮음
+                color: "white",
+                border: "none",
+                borderRadius: "50%", // 둥근 모양
+                padding: "10px",
+
+                transition: "background-color 0.3s ease", // 애니메이션 효과 추가
+              }}
             >
               <svg viewBox="0 0 24 24" className="mic-icon">
                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
@@ -270,6 +293,17 @@ const Chat = () => {
               onClick={stopRecording}
               disabled={!isRecording}
               className={`record-button stop ${!isRecording ? "disabled" : ""}`}
+              style={{
+                backgroundColor: isRecording
+                  ? "rgba(128, 128, 128, 1)"
+                  : "rgba(128, 128, 128, 0.3)", // 녹음 중이면 투명도 낮음
+                color: "white",
+                border: "none",
+                borderRadius: "50%", // 둥근 모양
+                padding: "10px",
+
+                transition: "background-color 0.3s ease", // 애니메이션 효과 추가
+              }}
             >
               <svg viewBox="0 0 24 24" className="stop-icon">
                 <rect x="6" y="6" width="12" height="12" />
