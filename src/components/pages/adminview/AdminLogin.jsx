@@ -22,9 +22,10 @@ function AdminLogin() {
           body: JSON.stringify(values),
         }
       );
-      console.log(response.headers);
+      console.log(response);
       const access_token = response.headers.get("Access-Token"); //null 되는 문제
       const data = await response.json();
+      console.log("---------------");
       console.log(data);
       if (data.message) {
         localStorage.setItem("accessToken", access_token);

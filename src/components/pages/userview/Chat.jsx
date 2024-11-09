@@ -211,7 +211,18 @@ const Chat = () => {
       >
         <NavigationButton
           className="exit-button"
-          onClick={() => navigate("/userview/letter")}
+          onClick={async () => {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/chat/summary`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                receiver: "2",
+              }),
+            });
+            navigate("/userview/letter");
+          }}
         >
           대화 종료하기
         </NavigationButton>
