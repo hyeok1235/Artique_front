@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../../../style/AdminList.css';
 import { Layout, Menu, List, Avatar, Button, Typography } from 'antd';
@@ -9,13 +9,22 @@ const { Title } = Typography;
 
 function AdminList() {
   const navigate = useNavigate();
+  const [artworks, setArtworks] = useState([]);
 
-  const artworks = [
-    { title: '별이 빛나는 밤', author: '고흐', gallery: '00갤러리', date: '2024.11.09' },
-    { title: '모나리자', author: '다빈치', gallery: 'xx갤러리', date: '2024.11.08' },
-    { title: '이삭 줍는 여인', author: '홍길동', gallery: '갤릿', date: '2022' },
-    { title: '피카소 그림', author: '홍길동', gallery: '갤릿', date: '2022' },
-  ];
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/all_pictures`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      setArtworks(Array.isArray(data) ? data : []);
+    };
+
+    fetchArtworks();
+  }, []);
 
   return (
     <Layout className="layout">
