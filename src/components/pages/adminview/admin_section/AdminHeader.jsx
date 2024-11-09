@@ -6,15 +6,15 @@ const { Header } = Layout;
 function AdminHeader(props) {
     const headerStyle = {
         backgroundColor: 'white',
-        borderTop: '8px solid #e42a2a',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        height: '80px',
+        borderTop: '11px solid #e42a2a',
+        boxShadow: '0 0px 10px rgba(0, 0, 0, 0.1)',
         paddingLeft: '20px',
+        boxSizing: 'border-box',
     };
 
     const logoStyle = {
         color: 'black',
-        position: 'relative',
-        bottom: '5px',
     }
 
     return (

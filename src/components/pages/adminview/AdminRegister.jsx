@@ -9,7 +9,9 @@ const { Title } = Typography;
 function AdminRegister() {
   return (
     <Layout className="layout">
-        <AdminHeader/>
+        <AdminHeader>
+          <a href="#" className="logout-link">로그아웃</a>
+        </AdminHeader>
       {/* <Header className="app-header">
         <div className="app-logo">Artique</div>
         <div className="app-user-info">
