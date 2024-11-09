@@ -1,5 +1,6 @@
 import React from "react";
 import "../../../style/background_picture.css";
+import EndingCredits from "../../section/ending";
 
 export default function Last() {
   return (
@@ -16,11 +17,13 @@ export default function Last() {
       >
         <h1>「별이 빛나는 밤에」</h1>
         <p>
-          대화가 종료되었습니다.<br></br>
-          <br></br>예술로 영혼이 치유되는 따뜻한 경험이 되었길 바랍니다.
-          <br></br>
-          <br></br>(엔딩크레딧 들어갈 자리)
+          대화가 종료되었습니다.
+          <br />
+          <br />
+          예술로 영혼이 치유되는 따뜻한 경험이 되었길 바랍니다.
         </p>
+        <br />
+        <EndingCredits />
       </div>
     </div>
   );
