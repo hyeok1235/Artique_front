@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const sendMessage = async (data) => {
   try {
+    console.log(process.env.REACT_APP_BACKEND_URL);
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/chat/save`,
       {
