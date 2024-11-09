@@ -1,8 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, Square, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const Chat = () => {
-  const [messages, setMessages] = useState([]);
+const VoiceChatInterface = () => {
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([
+    {
+      type: "system",
+      content: "안녕하세요, 만나서 반가워요!",
+      timestamp: new Date(),
+    },
+  ]);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef(null);
@@ -60,17 +67,14 @@ const Chat = () => {
       const formData = new FormData();
       formData.append("audio", audioBlob, "recording.wav");
 
-      const response = await fetch(
-        "https://naveropenapi.apigw.ntruss.com/recog/v1",
-        {
-          method: "POST",
-          headers: {
-            "X-NCP-APIGW-API-KEY-ID": process.env.REACT_APP_NAVER_API_KEY_ID,
-            "X-NCP-APIGW-API-KEY": process.env.REACT_APP_NAVER_API_KEY,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch("YOUR_NAVER_STT_API_ENDPOINT", {
+        method: "POST",
+        headers: {
+          "X-NCP-APIGW-API-KEY-ID": "YOUR_API_KEY_ID",
+          "X-NCP-APIGW-API-KEY": "YOUR_API_KEY",
+        },
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error("STT API 호출 실패");
@@ -106,25 +110,22 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      {/* Chat messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="chat-container">
+      <div className="header">
+        <button
+          className="exit-button"
+          onClick={() => navigate("/userview/letter")}
+        >
+          대화 종료하기
+        </button>
+      </div>
+
+      <div className="messages-container">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              message.type === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`max-w-[70%] rounded-lg p-3 ${
-                message.type === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-white text-gray-800"
-              }`}
-            >
+          <div key={index} className={`message ${message.type}`}>
+            <div className="message-content">
               <p>{message.content}</p>
-              <span className="text-xs opacity-70">
+              <span className="timestamp">
                 {message.timestamp.toLocaleTimeString()}
               </span>
             </div>
@@ -133,53 +134,211 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Recording controls */}
-      <div className="border-t bg-white p-4">
-        <div className="flex justify-center gap-4 max-w-4xl mx-auto">
-          {isProcessing ? (
-            <div className="flex items-center gap-2 text-blue-500">
-              <Loader2 className="w-6 h-6 animate-spin" />
-              <span>변환중...</span>
-            </div>
-          ) : (
-            <>
-              <button
-                onClick={startRecording}
-                disabled={isRecording}
-                className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                  isRecording
-                    ? "bg-gray-200 cursor-not-allowed"
-                    : "bg-blue-500 hover:bg-blue-600 shadow-lg"
-                }`}
-              >
-                <Mic
-                  className={`w-6 h-6 ${
-                    isRecording ? "text-gray-500" : "text-white"
-                  }`}
-                />
-              </button>
+      <div className="controls-container">
+        {isProcessing ? (
+          <div className="loading">
+            <div className="loading-spinner"></div>
+            <span>변환중...</span>
+          </div>
+        ) : (
+          <div className="button-container">
+            <button
+              onClick={startRecording}
+              disabled={isRecording}
+              className={`record-button start ${isRecording ? "disabled" : ""}`}
+            >
+              <svg viewBox="0 0 24 24" className="mic-icon">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+              </svg>
+            </button>
 
-              <button
-                onClick={stopRecording}
-                disabled={!isRecording}
-                className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                  !isRecording
-                    ? "bg-gray-200 cursor-not-allowed"
-                    : "bg-red-500 hover:bg-red-600 shadow-lg animate-pulse"
-                }`}
-              >
-                <Square
-                  className={`w-6 h-6 ${
-                    !isRecording ? "text-gray-500" : "text-white"
-                  }`}
-                />
-              </button>
-            </>
-          )}
-        </div>
+            <button
+              onClick={stopRecording}
+              disabled={!isRecording}
+              className={`record-button stop ${!isRecording ? "disabled" : ""}`}
+            >
+              <svg viewBox="0 0 24 24" className="stop-icon">
+                <rect x="6" y="6" width="12" height="12" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
+
+      <style jsx>{`
+        .chat-container {
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          background-color: #f5f5f5;
+        }
+
+        .header {
+          background-color: white;
+          padding: 16px;
+          border-bottom: 1px solid #eee;
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .exit-button {
+          background-color: #ff3b30;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 20px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background-color 0.3s ease;
+        }
+
+        .exit-button:hover {
+          background-color: #d63024;
+        }
+
+        .messages-container {
+          flex: 1;
+          overflow-y: auto;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .message {
+          display: flex;
+          margin-bottom: 10px;
+        }
+
+        .message.user {
+          justify-content: flex-end;
+        }
+
+        .message-content {
+          max-width: 70%;
+          padding: 12px;
+          border-radius: 12px;
+          position: relative;
+        }
+
+        .message.user .message-content {
+          background-color: #007aff;
+          color: white;
+        }
+
+        .message.system .message-content {
+          background-color: white;
+          color: #333;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+          opacity: 0.7;
+          margin-top: 4px;
+          display: block;
+        }
+
+        .controls-container {
+          background-color: white;
+          padding: 20px;
+          border-top: 1px solid #eee;
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        .record-button {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+
+        .record-button svg {
+          width: 24px;
+          height: 24px;
+          fill: white;
+        }
+
+        .record-button.start {
+          background-color: #007aff;
+        }
+
+        .record-button.stop {
+          background-color: #ff3b30;
+        }
+
+        .record-button.disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+
+        .record-button:not(.disabled):hover {
+          transform: scale(1.1);
+        }
+
+        .record-button.start:not(.disabled):hover {
+          background-color: #0066cc;
+        }
+
+        .record-button.stop:not(.disabled):hover {
+          background-color: #d63024;
+        }
+
+        .loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          color: #007aff;
+        }
+
+        .loading-spinner {
+          width: 24px;
+          height: 24px;
+          border: 3px solid #f3f3f3;
+          border-top: 3px solid #007aff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .record-button.stop.active {
+          animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default Chat;
+export default VoiceChatInterface;
