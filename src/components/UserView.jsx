@@ -10,7 +10,7 @@ import backgroundMusic from "../assets/Vincent__Don_Mclean.mp3";
 export default function UserView() {
   return (
     <div>
-      <audio src={backgroundMusic} autoPlay loop />
+      <audio src={backgroundMusic} autoPlay loop volume={0.01} />
       <Routes>
         <Route index element={<Navigate to="start" />} />
         <Route path="start" element={<Start />} />

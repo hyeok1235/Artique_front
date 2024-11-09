@@ -4,30 +4,38 @@ import { NavigationButton, ContentButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
 import FilmWithHoles from "../../../style/jsx/film";
 import Polaroid from "../../../style/jsx/polaroid";
+import fetchSummaries from "../../../api/nickname_api";
 
 const Letter = () => {
   const [imageSrc, setImageSrc] = useState("");
   const [selectedText, setSelectedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 텍스트 인덱스
   const [canvasUrl, setCanvasUrl] = useState("");
+  const [textOptions, setTextOptions] = useState([]);
   const navigate = useNavigate();
 
-  // 2번 URL을 임시로 설정
-  const polaroidImageUrl =
-    "https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/b34c3722b18d48bd87e66c9686caec25.png";
+  useEffect(() => {
+    const loadSummaries = async () => {
+      try {
+        const summaries = await fetchSummaries();
+        setTextOptions(summaries || []);
+        setSelectedText(
+          summaries && summaries.length > 0
+            ? summaries[0]
+            : "요약 문장을 불러오는 데 실패했습니다."
+        );
+      } catch (error) {
+        console.error("요약 문장을 불러오는 중 오류 발생:", error);
+      }
+    };
 
-  const textOptions = [
-    "밤하늘을 올려다볼 때, 별들은 고독 속에서 빛나는 희망을 속삭여준다. 내 그림 속 별들이 그랬던 것처럼.",
-    "고통 속에서 그려진 그림은, 누군가의 마음에 닿아 그를 위로할 힘을 가진다.",
-    "내 삶이란 하늘에 남긴 붓질이었을 뿐, 그러나 그 별빛이 누군가의 마음에 닿는다면 그걸로 충분하지 않을까.",
-    "밤하늘은 내 감정이 머무는 캔버스였고, 별빛은 그 위에 남긴 내 위로였다.",
-    "비록 아무도 나의 그림을 이해하지 못했지만, 시간이 흘러 그 안의 빛을 알아봐 주는 이가 있으니, 내 삶이 헛되지 않았다고 믿고 싶다.",
-  ];
+    loadSummaries();
+  }, []);
 
   // 현재 인덱스에 따라 선택된 텍스트 업데이트
   useEffect(() => {
     setSelectedText(textOptions[currentIndex]);
-  }, [currentIndex]);
+  }, [currentIndex, textOptions]);
 
   // 다음 텍스트로 이동
   const handleNext = () => {
@@ -101,7 +109,10 @@ const Letter = () => {
           }
         };
 
-        wrapText(ctx, selectedText, x, y, maxWidth, lineHeight);
+        // `selectedText`가 정의되어 있을 때만 `wrapText` 호출
+        if (selectedText) {
+          wrapText(ctx, selectedText, x, y, maxWidth, lineHeight);
+        }
         //줄바꿈 코드 끝!!!!!!!
 
         setCanvasUrl(canvas.toDataURL());
