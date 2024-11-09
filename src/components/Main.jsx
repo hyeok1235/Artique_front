@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./section/Header";
 import Footer from "./section/Footer";
-import { NavigationButton } from "../style/buttom";
+import { NavigationButton } from "../style/button";
 import "../style/background_picture.css";
 
 export default function Main() {
