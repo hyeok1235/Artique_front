@@ -31,11 +31,16 @@
 .messages-container {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 20px 100px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 60vw;
+  width: 40vw;
+}
+
+/* 스크롤바 디자인 */
+.messages-container::-webkit-scrollbar {
+  display: none;
 }
 
 .message {
