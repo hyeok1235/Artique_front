@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Start from "./pages/userview/Start";
-import Chat from "./pages/userview/Chat";
+import Chat from "./pages/Chat";
 import Letter from "./pages/userview/Letter";
 import Qr from "./pages/userview/Qr";
 import Last from "./pages/userview/Last";
