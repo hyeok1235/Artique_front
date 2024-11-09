@@ -18,7 +18,10 @@ export default function Start() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("생성된 닉네임:", data.data); // 콘솔에 닉네임 출력
+        const nickname = data.data;
+        console.log("생성된 닉네임:", nickname); // 콘솔에 닉네임 출력
+        // 로컬 스토리지에 닉네임 저장
+        localStorage.setItem("nickname", nickname);
         navigate("/userview/chat", { state: { nickname: data.data } }); // 채팅 페이지로 이동
       })
       .catch((error) => {
