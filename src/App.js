@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserView from "./components/UserView"; // Import UserView component
 import AdminView from "./components/AdminView"; // Import AdminView component
 import Main from "./components/section/Main"; // If you want to keep Main as a default route
+import AdminList from "./components/pages/adminview/AdminList";
 import Chat from "./components/pages/Chat"; // Import Chat component
 
 function App() {
@@ -12,9 +13,11 @@ function App() {
         {/* Route for UserView */}
         <Route path="/userview" element={<UserView />} />
         <Route path="/userview/main" element={<Chat />} />
+        <Route path="/userview/*" element={<UserView />} />
 
         {/* Route for AdminView */}
         <Route path="/adminview" element={<AdminView />} />
+        <Route path="/adminview/main" element={<AdminList />} />
 
         {/* Optionally, add a default route */}
         <Route path="/" element={<Main />} />
