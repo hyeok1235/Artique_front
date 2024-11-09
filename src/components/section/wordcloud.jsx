@@ -39,7 +39,7 @@ export default function WordCloudComponent() {
     // 워드클라우드 생성
     WordCloud(canvas, {
       list: words,
-      gridSize: 25,
+      gridSize: 17,
       weightFactor: 2,
       fontFamily: "Pretendard",
       color: "white",
