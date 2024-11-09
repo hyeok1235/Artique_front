@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SpeechBubble from "../../../style/speechbubble";
+import MySpeech from "../../../style/myspeech";
+import { NavigationButton } from "../../../style/buttom";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 
@@ -127,22 +130,31 @@ const VoiceChatInterface = () => {
   return (
     <div className="chat-container start-page">
       <div className="header">
-        <button
+        <NavigationButton
           className="exit-button"
           onClick={() => navigate("/userview/letter")}
         >
           대화 종료하기
-        </button>
+        </NavigationButton>
       </div>
       <div className="messages-container">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.type}`}>
-            <div className="message-content">
-              <p>{message.content}</p>
-              <span className="timestamp">
-                {message.timestamp.toLocaleTimeString()}
-              </span>
-            </div>
+            {message.type === 'system' ? (
+              <SpeechBubble className="message-content" direction="left" style={{ backgroundColor: 'white' }}>
+                <p>{message.content}</p>
+                <span className="timestamp">
+                  {message.timestamp.toLocaleTimeString()}
+                </span>
+              </SpeechBubble>
+            ) : (
+              <MySpeech className="message-content" direction="right" style={{ backgroundColor: 'blue' }}>
+                <p>{message.content}</p>
+                <span className="timestamp">
+                  {message.timestamp.toLocaleTimeString()}
+                </span>
+              </MySpeech>
+            )}
           </div>
         ))}
         <div ref={messagesEndRef} />
