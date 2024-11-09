@@ -1,19 +1,21 @@
 import React from 'react';
 import { Layout, Input, Typography, Button, Row, Col, Form } from 'antd';
 import '../../../style/AdminRegister.css';
+import AdminHeader from './admin_section/AdminHeader';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 function AdminRegister() {
   return (
     <Layout className="layout">
-      <Header className="app-header">
+        <AdminHeader/>
+      {/* <Header className="app-header">
         <div className="app-logo">Artique</div>
         <div className="app-user-info">
           김예락님 안녕하세요! | <a href="#" className="logout-link">로그아웃</a>
         </div>
-      </Header>
+      </Header> */}
       <Content className="app-content">
         <Row gutter={32}>
           {/* 좌측 섹션 */}
@@ -40,9 +42,6 @@ function AdminRegister() {
           <Col span={12}>
             <Title level={5}>Custom your AI</Title>
             <Form layout="vertical">
-              <Form.Item label="관객을 어떤 호칭으로 부르고 싶나요?">
-                <Input placeholder="ex. 당신, 친구야" />
-              </Form.Item>
               <Form.Item label="관객에게 꼭 설명하고 싶은 정보는? - explanation">
                 <Input.TextArea rows={4} placeholder="ex. 이 작품을 제작하게 된 배경" />
               </Form.Item>

@@ -1,8 +1,9 @@
 import React from 'react';
 import '../../../style/AdminList.css';
 import { Layout, Menu, List, Avatar, Button, Typography } from 'antd';
+import AdminHeader from './admin_section/AdminHeader';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 function AdminList() {
@@ -15,14 +16,15 @@ function AdminList() {
 
   return (
     <Layout className="layout">
-      <Header style={{ backgroundColor: '#d32f2f' }}>
+      <AdminHeader/>
+      {/* <Header style={{ backgroundColor: '#d32f2f' }}>
         <div className="logo">Artique</div>
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} style={{ backgroundColor: '#d32f2f' }}>
           <Menu.Item key="1">전체도서</Menu.Item>
           <Menu.Item key="2">마이페이지</Menu.Item>
           <Menu.Item key="3">로그아웃</Menu.Item>
         </Menu>
-      </Header>
+      </Header> */}
       <Content style={{ padding: '0 50px', marginTop: '20px' }}>
         <div className="artwork-list">
           <div className="list-header">

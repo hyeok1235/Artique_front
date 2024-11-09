@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import AdminLogin from "./pages/adminview/AdminLogin";
 import AdminList from "./pages/adminview/AdminList";
 import AdminRegister from "./pages/adminview/AdminRegister";
