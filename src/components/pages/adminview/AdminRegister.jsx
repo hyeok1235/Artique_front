@@ -21,6 +21,11 @@ function AdminRegister() {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token'); // 토큰 삭제
+    navigate("/adminview/login"); // 로그인 페이지로 이동
+  };
+
   const handleSubmit = async (values) => {
     const token = localStorage.getItem('access_token');
     const formData = new FormData();
@@ -35,13 +40,6 @@ function AdminRegister() {
     const customExplanation = values.explanation;
     const customQuestion = values.question;
 
-    // console.log(picturePhoto, name, artist, gallery, endDate, customExplanation, customQuestion);
-
-    // if (isNaN(endDate.getTime())) {
-    //   alert('유효하지 않은 종료일 형식입니다. 올바른 날짜 형식(YYYY-MM-DD)을 사용하세요.');
-    //   return;
-    // }
-
     console.log(name);
 
     if (pictureFile) {
@@ -55,11 +53,6 @@ function AdminRegister() {
     formData.append('custom_explanation', JSON.stringify(customExplanation));
     formData.append('custom_question', JSON.stringify(customQuestion));
     formData.append('custom_prompt', JSON.stringify('르네상스 시대 사람처럼 말해줘'));
-    console.log(endDate)
-
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/picture/create`, {
@@ -86,11 +79,13 @@ function AdminRegister() {
   return (
     <Form onFinish={handleSubmit}>
       <Layout className="layout">
-        <AdminHeader/>
+        <AdminHeader>
+          <Button onClick={handleLogout} className="logout-link" style={{position:'relative', top: '17px' }}>로그아웃</Button>
+         </AdminHeader> 
         <Content className="app-content">
           <Row gutter={32}>
             <Col span={12}>
-              <Button type="link" className="back-button">뒤로 가기</Button>
+              <Button type="link" className="back-button" onClick={() => navigate('/adminview/list')}>뒤로 가기</Button>
               <div layout="vertical" className="art-form">
                 <Form.Item label="작품" name="picture_photo" valuePropName="fileList" getValueFromEvent={e => e.fileList}>
                   <Upload beforeUpload={() => false} listType="picture">
