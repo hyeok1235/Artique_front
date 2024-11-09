@@ -6,13 +6,13 @@ import AdminHeader from "./admin_section/AdminHeader";
 
 const { Content } = Layout;
 
-function AdminLogin() {
+function AdminSignup() {
   const navigate = useNavigate();
 
-  const logIn = async (values) => {
+  const signUp = async (values) => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/admin/login`,
+        `${process.env.REACT_APP_BACKEND_URL}/admin/signup`,
         {
           method: "POST",
           headers: {
@@ -21,17 +21,15 @@ function AdminLogin() {
           body: JSON.stringify(values),
         }
       );
-      const access_token = response.headers.get("Access-Token");
       const data = await response.json();
-      if (data.message === "Login successful") {
-        localStorage.setItem("access_token", access_token);
-        navigate("/adminview/list");
+      if (data.message) {
+        navigate("/adminview/login");
       } else {
-        alert("로그인 실패");
+        alert(`회원가입 실패 - ${data.error}`);
       }
     } catch (error) {
-      console.error("로그인 중 오류 발생:", error);
-      alert("로그인 중 오류가 발생했습니다.");
+      console.error("회원가입 중 오류 발생:", error);
+      alert("회원가입 중 오류가 발생했습니다.");
     }
   };
 
@@ -39,7 +37,10 @@ function AdminLogin() {
     <Layout className="layout">
       <AdminHeader />
       <Content className="login-content">
-        <Form className="login-form" layout="vertical" onFinish={logIn}>
+        <Form className="login-form" layout="vertical" onFinish={signUp}>
+          <Form.Item name="nickname">
+            <Input placeholder="닉네임" />
+          </Form.Item>
           <Form.Item name="email">
             <Input placeholder="아이디 (메일 주소)" />
           </Form.Item>
@@ -47,14 +48,18 @@ function AdminLogin() {
             <Input.Password placeholder="비밀번호" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-button">
-              로그인
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="register-button"
+            >
+              계정 생성
             </Button>
           </Form.Item>
           <Form.Item>
-            <Link to="/adminview/signup">
+            <Link to="/adminview/login">
               <Button type="link" className="switch-button">
-                계정 생성
+                로그인
               </Button>
             </Link>
           </Form.Item>
@@ -64,4 +69,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default AdminSignup;
