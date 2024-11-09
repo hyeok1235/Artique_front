@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton, ContentButton } from "../../../style/buttom";
+import { NavigationButton, ContentButton } from "../../../style/button";
 import "../../../style/background_picture.css";
 import WordCloudComponent from "../../section/wordcloud";
 import SpeechBubble from "../../../style/speechbubble";

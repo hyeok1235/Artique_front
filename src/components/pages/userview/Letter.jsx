@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { NavigationButton, ContentButton } from "../../../style/buttom";
+import { NavigationButton, ContentButton } from "../../../style/button";
 import "../../../style/background_picture.css";
+import FilmWithHoles from "../../../style/film";
+import Polaroid from "../../../style/polaroid";
 
 const Letter = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
@@ -124,14 +126,25 @@ const Letter = () => {
         {canvasUrl && (
           <div>
             <p>
-              당신과 고흐의 대화에서 추출된 요약 내용입니다. 원하는 문구를
-              골라보세요.
+              방금 전 대화에서 추출된 요약 내용입니다. 원하는 문구를 골라보세요.
             </p>
-            <img
-              src={canvasUrl}
-              alt="Image with text"
-              style={{ width: "350px" }}
-            />
+            {/* <FilmWithHoles>
+              <img
+                src={canvasUrl}
+                alt="Image with text"
+                style={{ width: "350px" }}
+              />
+            </FilmWithHoles> */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "0px",
+              }}
+            >
+              <Polaroid src={canvasUrl} />
+            </div>
           </div>
         )}
         {/* 멘트 고르기~~~~~~~ */}
