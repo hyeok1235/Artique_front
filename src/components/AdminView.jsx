@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
+
 const onFinish = async (values) => {
   console.log('Success:', values);
   try {
@@ -16,9 +17,11 @@ const onFinish = async (values) => {
     console.error('Error:', error);
   }
 };
+
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
+
 const AdminView = () => (
   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
     <Form
