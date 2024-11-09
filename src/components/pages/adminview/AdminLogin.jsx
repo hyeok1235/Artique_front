@@ -22,12 +22,13 @@ function AdminLogin() {
           body: JSON.stringify(values),
         }
       );
+      console.log(response);
       console.log(response.headers);
       const access_token = response.headers.get("Access-Token"); //null 되는 문제
       const data = await response.json();
       console.log(data);
-      if (data.message) {
-        localStorage.setItem("accessToken", access_token);
+      if (data.message==="Login successful") {
+        localStorage.setItem("access_token", access_token);
         console.log(localStorage.getItem("accessToken"));
         navigate("/adminview/list");
       } else {
