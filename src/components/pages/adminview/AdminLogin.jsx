@@ -12,22 +12,24 @@ function AdminLogin() {
 
   const logIn = async (values) => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/admin/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       console.log(response.headers);
-      const access_token = response.headers.get('Access-Token'); //null 되는 문제
+      const access_token = response.headers.get("Access-Token"); //null 되는 문제
       const data = await response.json();
       console.log(data);
       if (data.message) {
-        
-        localStorage.setItem('accessToken', access_token);
-        console.log(localStorage.getItem('accessToken'));
-        navigate('/adminview/list');
+        localStorage.setItem("accessToken", access_token);
+        console.log(localStorage.getItem("accessToken"));
+        navigate("/adminview/list");
       } else {
         alert("로그인 실패");
       }
@@ -39,13 +41,16 @@ function AdminLogin() {
 
   const signUp = async (values) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/admin/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const data = await response.json();
       console.log(data);
       if (data.message) {
