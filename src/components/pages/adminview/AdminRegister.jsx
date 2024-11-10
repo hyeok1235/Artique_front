@@ -36,6 +36,7 @@ function AdminRegister() {
     const name = values.name;
     const artist = values.artist;
     const gallery = values.gallery;
+    const startDate = formatDate(values.start_date);
     const endDate = formatDate(values.end_date);
     const customExplanation = values.explanation;
     const customQuestion = values.question;
@@ -49,10 +50,10 @@ function AdminRegister() {
     formData.append('artist', artist);
     formData.append('gallery', gallery);
     formData.append('end_date', endDate);
-    formData.append('start_date', endDate);
+    formData.append('start_date', startDate);
     formData.append('custom_explanation', JSON.stringify(customExplanation));
     formData.append('custom_question', JSON.stringify(customQuestion));
-    formData.append('custom_prompt', JSON.stringify('르네상스 시대 사람처럼 말해줘'));
+    formData.append('custom_prompt', JSON.stringify('너는 "별이 빛나는 밤"을 그린 빈센트 반 고흐야. 너는 점잖고, 하오체를 사용하면서 말을 길게 하지 않아.'));
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/picture/create`, {
@@ -101,7 +102,10 @@ function AdminRegister() {
                 <Form.Item label="갤러리" name="gallery">
                   <Input placeholder="전시 장소를 입력하세요" />
                 </Form.Item>
-                <Form.Item label="전시 기간" name="end_date">
+                <Form.Item label="전시 시작일" name="start_date">
+                  <Input placeholder="2023-04-05의 형태로 입력하세요" />
+                </Form.Item>
+                <Form.Item label="전시 마감일" name="end_date">
                   <Input placeholder="2023-04-05의 형태로 입력하세요" />
                 </Form.Item>
               </div>
