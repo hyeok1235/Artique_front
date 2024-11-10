@@ -1,40 +1,47 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import WordCloud from "wordcloud";
-
-// 목업 데이터
-const words = [
-  ["React", 20],
-  ["JavaScript", 25],
-  ["Frontend", 15],
-  ["Backend", 10],
-  ["API", 18],
-  ["Visualization", 22],
-  ["Component", 12],
-  ["Development", 17],
-  ["Mockup", 8],
-  ["aaa", 20],
-  ["bbbbbbbbb", 25],
-  ["ccccc", 15],
-  ["ddddddd", 10],
-  ["eeeeeee", 18],
-  ["fffff", 20],
-  ["gggggg", 25],
-  ["hhhhhhh", 15],
-  ["iiiiiiiiii", 10],
-  ["jjj", 18],
-];
 
 export default function WordCloudComponent() {
   const canvasRef = useRef(null);
+  const [words, setWords] = useState([]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const fetchSentences = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/chat/all_sentences`
+        );
+        if (!response.ok) throw new Error("데이터를 불러오는 데 실패했습니다.");
 
-    // 고해상도를 위해 실제 크기 설정 (2배)
-    canvas.width = 500; // 해상도 높이기 위해 가로 크기 증가
-    canvas.height = 500; // 해상도 높이기 위해 세로 크기 증가
+        const data = await response.json();
+        console.log("받아온 데이터:", data);
+
+        // 문장을 단어로 나누고 단어 리스트 생성
+        const wordList = [];
+        data.sentences.forEach((sentence) => {
+          const words = sentence.summary.split(" ");
+          words.forEach((word) => {
+            // 단어를 개별 가중치와 함께 추가 (랜덤 가중치 또는 특정 규칙 적용)
+            wordList.push([word, Math.floor(Math.random() * 20) + 10]);
+          });
+        });
+        setWords(wordList);
+      } catch (error) {
+        console.error("API 요청 중 오류:", error);
+      }
+    };
+
+    fetchSentences();
+  }, []);
+
+  useEffect(() => {
+    if (!words.length) return;
+
+    const canvas = canvasRef.current;
+    canvas.width = 500;
+    canvas.height = 500;
     canvas.style.width = "100%";
-    canvas.style.height = "400px"; // CSS 크기는 그대로 유지
+    canvas.style.height = "300px";
 
     // 워드클라우드 생성
     WordCloud(canvas, {
@@ -43,15 +50,11 @@ export default function WordCloudComponent() {
       weightFactor: 2,
       fontFamily: "Pretendard",
       color: "white",
-      backgroundColor: null,
+      backgroundColor: "rgba(0, 0, 0, 0)",
       rotateRatio: 0.5,
       rotationSteps: 5,
     });
-
-    // 배경을 투명하게 설정
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }, []);
+  }, [words]);
 
   return <canvas ref={canvasRef} style={{ width: "100%", height: "400px" }} />;
 }

@@ -43,9 +43,9 @@ export default function Start() {
       >
         <h1>당신을 기다리고 있었어요.</h1>
         <WordCloudComponent />
-        <SpeechBubble direction="left">Wanna experience Artique?</SpeechBubble>
+        {/* <SpeechBubble direction="left">Wanna experience Artique?</SpeechBubble> */}
         <NavigationButton onClick={handleLetsGoClick}>
-          Let's Go
+          Let's Artique!
         </NavigationButton>{" "}
       </div>
     </div>
