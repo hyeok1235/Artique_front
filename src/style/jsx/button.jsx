@@ -8,14 +8,14 @@ export const NavigationButton = ({ onClick, children, ...props }) => (
       type="primary"
       onClick={onClick}
       style={{
-        backgroundColor: "rgba(180, 220, 530, 0.7)",
+        backgroundColor: "rgba(180, 220, 530, 0.8)",
         color: "white",
         fontWeight: "bold",
         borderColor: "gray",
         border: "none",
         borderRadius: "2cap",
         margin: "10px", // 추가된 margin
-        padding: "20px 30px", // 추가된 padding
+        padding: "25px 30px", // 추가된 padding
       }}
       {...props}
     >

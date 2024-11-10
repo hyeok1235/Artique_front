@@ -41,7 +41,7 @@ export default function WordCloudComponent() {
     canvas.width = 500;
     canvas.height = 500;
     canvas.style.width = "100%";
-    canvas.style.height = "400px";
+    canvas.style.height = "300px";
 
     // 워드클라우드 생성
     WordCloud(canvas, {
@@ -50,7 +50,7 @@ export default function WordCloudComponent() {
       weightFactor: 2,
       fontFamily: "Pretendard",
       color: "white",
-      backgroundColor: null,
+      backgroundColor: "rgba(0, 0, 0, 0)",
       rotateRatio: 0.5,
       rotationSteps: 5,
     });

@@ -50,11 +50,33 @@ const Letter = () => {
   };
 
   useEffect(() => {
+    const loadSummaries = async () => {
+      try {
+        const summaries = await fetchSummaries();
+        setTextOptions(summaries || []);
+        setSelectedText(
+          summaries && summaries.length > 0
+            ? summaries[0]
+            : "요약 문장을 불러오는 데 실패했습니다."
+        );
+      } catch (error) {
+        console.error("요약 문장을 불러오는 중 오류 발생:", error);
+      }
+    };
+
+    loadSummaries();
+  }, []);
+
+  useEffect(() => {
+    setSelectedText(textOptions[currentIndex]);
+  }, [currentIndex, textOptions]);
+
+  useEffect(() => {
     const createImageWithText = async () => {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
-        "https://cors-anywhere.herokuapp.com/https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/b433c324ae874110b129ac22800e66b9.PNG";
+        "https://cors-anywhere.herokuapp.com/https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/ba1f2ad873dd4bb4bbceccc9304ffcea.jpg";
 
       img.onload = () => {
         setImageSrc(img.src);
