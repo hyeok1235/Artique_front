@@ -13,7 +13,7 @@
 
 .credits-text {
   display: inline-block;
-  animation: scroll-up 70s linear infinite; /* 스크롤 애니메이션 */
+  animation: scroll-up 100s linear infinite; /* 스크롤 애니메이션 */
   white-space: pre-wrap;
   max-width: 800px; /* 최대 너비 설정 */
   margin: 0 auto; /* 중앙 정렬 */
@@ -23,9 +23,9 @@
 
 @keyframes scroll-up {
   0% {
-    transform: translateY(50%);
+    transform: translateY(70%);
   }
   100% {
-    transform: translateY(-50%);
+    transform: translateY(-70%);
   }
 }
