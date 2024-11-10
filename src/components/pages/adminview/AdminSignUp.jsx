@@ -47,6 +47,23 @@ function AdminSignup() {
           <Form.Item name="password">
             <Input.Password placeholder="비밀번호" />
           </Form.Item>
+          <Form.Item
+            name="confirmPassword"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "비밀번호 확인을 입력해 주세요." },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("비밀번호가 일치하지 않습니다."));
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="비밀번호 확인" />
+          </Form.Item>
           <Form.Item>
             <Button
               type="primary"
