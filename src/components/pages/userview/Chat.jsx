@@ -79,6 +79,7 @@ const Chat = () => {
       // 오디오 재생
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      audio.volume = 1; // 또는 0.8, 0.5와 같은 다른 값으로 조절 가능
       audio.play();
     } catch (error) {
       console.error("TTS 생성 중 오류:", error);
@@ -159,8 +160,8 @@ const Chat = () => {
       const query = {
         message: user_data.text,
         picture_id: "1",
-        receiver: "2",
-        sender: "1",
+        receiver: "AI",
+        sender: localStorage.getItem("nickname"),
       };
 
       const result = await sendMessage(query);
