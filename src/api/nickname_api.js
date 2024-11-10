@@ -16,8 +16,7 @@ const fetchSummaries = async () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nickname }),
-        mode: "no-cors",
+        body: JSON.stringify({ receiver: nickname }),
       }
     );
 
