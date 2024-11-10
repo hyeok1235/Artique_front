@@ -85,7 +85,7 @@ function AdminRegister() {
         <Content className="app-content">
           <Row gutter={32}>
             <Col span={12}>
-              <Button type="link" className="back-button" onClick={() => navigate('/adminview/list')}>뒤로 가기</Button>
+              <Button className="back-button" onClick={() => navigate('/adminview/list')}>뒤로 가기</Button>
               <div layout="vertical" className="art-form">
                 <Form.Item label="작품" name="picture_photo" valuePropName="fileList" getValueFromEvent={e => e.fileList}>
                   <Upload beforeUpload={() => false} listType="picture">
@@ -107,12 +107,15 @@ function AdminRegister() {
               </div>
             </Col>
             <Col span={12}>
-              <Title level={5}>Custom your AI</Title>
+              <Title level={6}>Custom your AI</Title>
               <div layout="vertical">
-                <Form.Item label="관객에게 꼭 설명하고 싶은 정보는? - explanation" name="explanation">
+                <Form.Item name="explanation">
+                <div>관객에게 꼭 설명하고 싶은 정보는? - explanation</div>
                   <Input.TextArea rows={4} placeholder="ex. 이 작품을 제작하게 된 배경" />
                 </Form.Item>
-                <Form.Item label="관객에게 이 질문은 꼭 물어보고 싶다! - question" name="question">
+                <Form.Item name="question">
+                  <br/>
+                <div>"관객에게 이 질문은 꼭 물어보고 싶다! - question"</div>
                   <Input.TextArea rows={4} placeholder="ex. 제 작품을 당신의 삶과 연결지을 수 있나요?" />
                 </Form.Item>
               </div>
