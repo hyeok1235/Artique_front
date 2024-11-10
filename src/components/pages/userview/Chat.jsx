@@ -35,7 +35,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     {
       type: "system",
-      content: "안녕하세요, 만나서 반가워요!",
+      content: "만나서 반가워요, 작품은 어떠셨나요?",
       timestamp: new Date(),
       isTyping: true,
     },
