@@ -129,7 +129,7 @@ const Chat = () => {
       formData.append("audio", audioBlob, "recording.wav");
 
       const response = await fetch(
-        "https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor",
+        "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor",
         {
           method: "POST",
           headers: {
