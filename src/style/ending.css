@@ -1,6 +1,6 @@
 .credits-container {
   overflow: hidden;
-  height: 200px; /* 보이는 영역 높이 */
+  height: 250px; /* 보이는 영역 높이 */
   width: 100%;
   display: flex;
   align-items: center;
@@ -13,7 +13,7 @@
 
 .credits-text {
   display: inline-block;
-  animation: scroll-up 30s linear infinite; /* 스크롤 애니메이션 */
+  animation: scroll-up 70s linear infinite; /* 스크롤 애니메이션 */
   white-space: pre-wrap;
   max-width: 800px; /* 최대 너비 설정 */
   margin: 0 auto; /* 중앙 정렬 */
