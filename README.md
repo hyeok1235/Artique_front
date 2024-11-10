@@ -1,4 +1,4 @@
-# Next Art - Frontend
+# Artique - Frontend
 
 Next Art의 프론트엔드 부분입니다. 이 부분은 사용자와 작품이 상호작용하며 감상할 수 있는 고급 개인화된 웹 인터페이스를 제공합니다.
 
