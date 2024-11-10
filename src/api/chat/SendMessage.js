@@ -10,7 +10,7 @@ const sendMessage = async (data) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        mode: "no-cors",
+        // mode: "no-cors",
       }
     );
 
