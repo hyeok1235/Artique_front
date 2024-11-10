@@ -35,7 +35,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     {
       type: "system",
-      content: "만나서 반가워요, \n 작품은 어떠셨나요?",
+      content: "안녕하세요, 만나서 반가워요!",
       timestamp: new Date(),
       isTyping: true,
     },
@@ -129,7 +129,7 @@ const Chat = () => {
       formData.append("audio", audioBlob, "recording.wav");
 
       const response = await fetch(
-        "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor",
+        "https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor",
         {
           method: "POST",
           headers: {
