@@ -76,7 +76,7 @@ const Letter = () => {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
-        "https://cors-anywhere.herokuapp.com/https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/ba1f2ad873dd4bb4bbceccc9304ffcea.jpg";
+        "https://cors-anywhere.herokuapp.com/https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/d687542fff5e46d78d16ae34571d171c.jpg";
 
       img.onload = () => {
         setImageSrc(img.src);
@@ -164,8 +164,8 @@ const Letter = () => {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        const canvasWidth = img.width + 40; // 폴라로이드 프레임을 위한 여백
-        const canvasHeight = img.height + 80; // 하단 여백 포함
+        const canvasWidth = img.width + 50; // 폴라로이드 프레임을 위한 여백
+        const canvasHeight = img.height + 100; // 하단 여백 포함
 
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
@@ -175,7 +175,7 @@ const Letter = () => {
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // 그림자 효과
-        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
         ctx.shadowBlur = 10;
         ctx.shadowOffsetX = 4;
         ctx.shadowOffsetY = 4;
@@ -186,7 +186,7 @@ const Letter = () => {
         // 텍스트 추가
         ctx.shadowBlur = 0; // 텍스트에는 그림자 없음
         ctx.fillStyle = "black";
-        ctx.font = "16px Pretendard";
+        ctx.font = "25px Pretendard";
         ctx.textAlign = "center";
         ctx.fillText("2024. 11. 10.", canvasWidth / 2, canvasHeight - 20); // 하단 중앙에 날짜 텍스트
 

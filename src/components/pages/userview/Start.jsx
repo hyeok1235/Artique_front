@@ -41,11 +41,14 @@ export default function Start() {
           textAlign: "center",
         }}
       >
-        <h1>당신을 기다리고 있었어요.</h1>
+        <h1>「별이 빛나는 밤에」</h1>
+        <SpeechBubble direction="left">당신을 기다리고 있었어요.</SpeechBubble>
+        <br></br>
         <WordCloudComponent />
         {/* <SpeechBubble direction="left">Wanna experience Artique?</SpeechBubble> */}
+        <br></br>
         <NavigationButton onClick={handleLetsGoClick}>
-          Let's Artique!
+          입장하기
         </NavigationButton>{" "}
       </div>
     </div>
