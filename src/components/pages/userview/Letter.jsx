@@ -76,7 +76,7 @@ const Letter = () => {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
-        "https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/ba1f2ad873dd4bb4bbceccc9304ffcea.jpg";
+        "https://cors-anywhere.herokuapp.com/https://artique-bucket.s3.ap-northeast-2.amazonaws.com/pictures/ba1f2ad873dd4bb4bbceccc9304ffcea.jpg";
 
       img.onload = () => {
         setImageSrc(img.src);
