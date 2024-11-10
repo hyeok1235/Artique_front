@@ -23,14 +23,14 @@ const fetchSummaries = async () => {
 
     if (response.ok) {
       const result = await response.json();
-      console.log("서버 응답:", result);
+      console.log("받아온 5개 요약 데이터:", result);
       return result.sentences;
     } else {
       console.error("서버 요청 실패");
       throw new Error("서버 요청 실패");
     }
   } catch (error) {
-    console.error("API 요청 중 오류 발생:", error);
+    console.error("요약API 요청 중 오류 발생:", error);
     throw error;
   }
 };
