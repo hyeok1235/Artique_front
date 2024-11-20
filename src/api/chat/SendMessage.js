@@ -4,13 +4,14 @@ const sendMessage = async (data) => {
   try {
     console.log(process.env.REACT_APP_BACKEND_URL);
     const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/chat/save`,
+      `${process.env.REACT_APP_BACKEND_URL}chat/save`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        // mode: "no-cors",
       }
     );
 

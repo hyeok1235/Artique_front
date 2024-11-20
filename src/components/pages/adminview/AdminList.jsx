@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../../../style/AdminList.css';
 import { Layout, Menu, List, Avatar, Button, Typography } from 'antd';
@@ -9,18 +9,42 @@ const { Title } = Typography;
 
 function AdminList() {
   const navigate = useNavigate();
+  const [artworks, setArtworks] = useState([]);
 
-  const artworks = [
-    { title: '별이 빛나는 밤', author: '고흐', gallery: '00갤러리', date: '2024.11.09' },
-    { title: '모나리자', author: '다빈치', gallery: 'xx갤러리', date: '2024.11.08' },
-    { title: '이삭 줍는 여인', author: '홍길동', gallery: '갤릿', date: '2022' },
-    { title: '피카소 그림', author: '홍길동', gallery: '갤릿', date: '2022' },
-  ];
+  const handleLogout = () => {
+    localStorage.removeItem('access_token'); // 토큰 삭제
+    navigate("/adminview/login"); // 로그인 페이지로 이동
+  };
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      const token = localStorage.getItem('access_token');
+      console.log(token);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/all_pictures`, {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log(response);
+      if(!response.ok) {
+        console.log('Error');
+        return;
+      }
+      const data = await response.json();
+      console.log('data: ',data);
+      setArtworks(Array.isArray(data.pictures) ? data.pictures : []);
+    };
+
+    fetchArtworks();
+  }, []);
+
+  console.log(artworks);
 
   return (
     <Layout className="layout">
       <AdminHeader>
-        <a href="/adminview/login" className="logout-link">로그아웃</a>
+      <Button onClick={handleLogout} className="logout-link" style={{position:'relative', top: '17px' }}>로그아웃</Button>
       </AdminHeader>
       <Content style={{ padding: '0 50px', marginTop: '20px' }}>
         <div className="artwork-list">
@@ -35,12 +59,12 @@ function AdminList() {
             dataSource={artworks}
             renderItem={item => (
               <List.Item
-                actions={[<Button type="link" style={{ color: '#d32f2f' }} onClick={() => navigate("/adminview/register")}>수정</Button>]}
+                actions={[<Button type="link" style={{ color: '#d32f2f' }}></Button>]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar shape="circle" size="large" style={{ backgroundColor: '#ddd' }} />}
-                  title={<a href="#">{item.title}</a>}
-                  description={`${item.author} | ${item.gallery} | ${item.date}`}
+                  avatar={<Avatar shape="circle" size="large" src={item.picture_photo} />}
+                  title={<span>{item.name}</span>}
+                  description={`${item.artist} | ${item.gallery} | ${item.end_date}`}
                 />
               </List.Item>
             )}

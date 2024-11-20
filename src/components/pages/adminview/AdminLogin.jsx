@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Layout, Input, Button, Form, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Layout, Input, Button, Form } from "antd";
+import { useNavigate, Link } from "react-router-dom";
 import "../../../style/AdminLogin.css";
 import AdminHeader from "./admin_section/AdminHeader";
 
@@ -8,7 +8,6 @@ const { Content } = Layout;
 
 function AdminLogin() {
   const navigate = useNavigate();
-  const [action, setAction] = useState("login");
 
   const logIn = async (values) => {
     try {
@@ -22,9 +21,10 @@ function AdminLogin() {
           body: JSON.stringify(values),
         }
       );
+      const access_token = response.headers.get("Access-Token");
       const data = await response.json();
-      console.log(data);
-      if (data.message) {
+      if (data.message === "Login successful") {
+        localStorage.setItem("access_token", access_token);
         navigate("/adminview/list");
       } else {
         alert("로그인 실패");
@@ -35,45 +35,11 @@ function AdminLogin() {
     }
   };
 
-  const signUp = async (values) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      console.log(data);
-      if (data.message) {
-        navigate("/adminview/login");
-      } else {
-        alert(`회원가입 실패 - ${data.error}`);
-      }
-    } catch (error) {
-      console.error("회원가입 중 오류 발생:", error);
-      alert("회원가입 중 오류가 발생했습니다.");
-    }
-  };
-
-  const handleSubmit = (values) => {
-    console.log(values);
-    if (action === "login") {
-      logIn(values);
-    } else {
-      signUp(values);
-    }
-  };
-
   return (
     <Layout className="layout">
       <AdminHeader />
       <Content className="login-content">
-        <Form className="login-form" layout="vertical" onFinish={handleSubmit}>
-          <Form.Item name="nickname">
-            <Input placeholder="닉네임" />
-          </Form.Item>
+        <Form className="login-form" layout="vertical" onFinish={logIn}>
           <Form.Item name="email">
             <Input placeholder="아이디 (메일 주소)" />
           </Form.Item>
@@ -81,24 +47,16 @@ function AdminLogin() {
             <Input.Password placeholder="비밀번호" />
           </Form.Item>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-button"
-              onClick={() => setAction("login")}
-            >
+            <Button type="primary" htmlType="submit" className="login-button">
               로그인
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button
-              type="default"
-              htmlType="submit"
-              className="register-button"
-              onClick={() => setAction("signup")}
-            >
-              계정 생성
-            </Button>
+            <Link to="/adminview/signup">
+              <Button type="link" className="switch-button">
+                계정 생성
+              </Button>
+            </Link>
           </Form.Item>
         </Form>
       </Content>

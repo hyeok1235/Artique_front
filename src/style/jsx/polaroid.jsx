@@ -20,7 +20,7 @@ const polaroidStyle = {
   flexDirection: "column",
   alignItems: "center",
   backgroundColor: "white",
-  padding: "10px",
+  padding: "15px",
   width: "300px",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   borderRadius: "3px",
@@ -35,7 +35,7 @@ const imageContainerStyle = {
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "black",
-  borderRadius: "3px",
+  borderRadius: "5px",
 };
 
 const imageStyle = {
@@ -46,10 +46,11 @@ const imageStyle = {
 
 const captionStyle = {
   marginTop: "10px",
-  fontSize: "14px",
+  fontSize: "15px",
   color: "#333",
   textAlign: "center",
   fontFamily: "Pretendard",
+  textShadow: "none",
 };
 
 export default Polaroid;

@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Artique - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Next Art의 프론트엔드 부분입니다. 이 부분은 사용자와 작품이 상호작용하며 감상할 수 있는 고급 개인화된 웹 인터페이스를 제공합니다.
 
-## Available Scripts
+## 설치 및 실행
 
-In the project directory, you can run:
+1. 의존성 설치:
 
-### `npm start`
+   ```bash
+   npm install
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. 로컬 개발 서버 시작:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   ```bash
+   npm run start
+   ```
 
-### `npm test`
+## 사용된 주요 기술
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+React: 사용자 인터페이스(UI)를 동적으로 생성하는 데 사용됩니다.
 
-### `npm run build`
+OpenAI: GPT 모델을 활용하여 작품에 대한 스토리텔링과 사용자와의 대화를 처리합니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Naver AI: 한국어 음성 인식 및 처리를 지원합니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+TTS (Text-to-Speech): AI-generated 텍스트를 음성으로 변환하여, 사용자에게 더욱 몰입감 있는 경험을 제공합니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 주요 기능
 
-### `npm run eject`
+대화형 스토리텔링: 작품과의 상호작용을 통해 실시간으로 이야기를 생성하고, 사용자가 작품을 감상하면서 참여할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+음성 인식: 사용자가 작품에 대해 질문하거나 답변할 때 음성 인식 기술을 통해 실시간으로 반응합니다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+개인화된 콘텐츠 생성: 사용자가 작품을 감상한 후, 자신만의 요약이나 키워드를 기반으로 한 개인화된 콘텐츠를 다운로드할 수 있는 기능을 제공합니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 환경 변수 설정
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+.env 파일에 다음과 같은 환경 변수 설정이 필요합니다.
 
-## Learn More
+REACT_APP_NAVER_API_KEY_ID
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+REACT_APP_NAVER_API_KEY
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+REACT_APP_OPENAI_API_KEY
 
-### Code Splitting
+REACT_APP_BACKEND_URL
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import SpeechBubble from "../../../style/speechbubble";
-import MySpeech from "../../../style/myspeech";
-import { NavigationButton } from "../../../style/button";
+import SpeechBubble from "../../../style/jsx/speechbubble";
+import MySpeech from "../../../style/jsx/myspeech";
+import { NavigationButton } from "../../../style/jsx/button";
 import "../../../style/background_picture.css";
 import "../../../style/Chat.css";
 import sendMessage from "../../../api/chat/SendMessage";
@@ -35,7 +35,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     {
       type: "system",
-      content: "안녕하세요, 만나서 반가워요!",
+      content: "만나서 반가워요, 작품은 어떠셨나요?",
       timestamp: new Date(),
       isTyping: true,
     },
@@ -79,6 +79,7 @@ const Chat = () => {
       // 오디오 재생
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      audio.volume = 1; // 또는 0.8, 0.5와 같은 다른 값으로 조절 가능
       audio.play();
     } catch (error) {
       console.error("TTS 생성 중 오류:", error);
@@ -145,7 +146,7 @@ const Chat = () => {
       }
 
       const user_data = await response.json();
-
+      console.log(user_data);
       setMessages((prev) => [
         ...prev,
         {
@@ -159,8 +160,8 @@ const Chat = () => {
       const query = {
         message: user_data.text,
         picture_id: "1",
-        receiver: "2",
-        sender: "1",
+        receiver: "AI",
+        sender: localStorage.getItem("nickname"),
       };
 
       const result = await sendMessage(query);
@@ -177,8 +178,8 @@ const Chat = () => {
 
       generateSpeech(result.message);
     } catch (error) {
-      console.error("STT 처리 실패:", error);
-      addMessage("system", "다시 한번 말해주시겠어요?");
+      // console.error("STT 처리 실패:", error);
+      // addMessage("system", "다시 한번 말해주시겠어요?");
     } finally {
       setIsProcessing(false);
     }
@@ -211,7 +212,18 @@ const Chat = () => {
       >
         <NavigationButton
           className="exit-button"
-          onClick={() => navigate("/userview/letter")}
+          onClick={async () => {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/chat/summary`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                receiver: "2",
+              }),
+            });
+            navigate("/userview/letter");
+          }}
         >
           대화 종료하기
         </NavigationButton>
